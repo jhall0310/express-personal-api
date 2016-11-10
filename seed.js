@@ -13,3 +13,20 @@
 //   console.log("Created new campsite", campsite._id)
 //   process.exit(); // we're all done! Exit the program.
 // })
+
+var db = require('./models');
+
+var nbaTeams_List = [
+  {
+    name: "Lakers",
+    location: "Los Angeles",
+    year: "1947"
+  },
+  {
+    name: "Clippers",
+    location: "Los Angeles",
+    year: "1967"
+  }
+];
+
+console.log("seed called!");

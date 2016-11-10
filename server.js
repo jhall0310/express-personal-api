@@ -33,9 +33,16 @@ app.use(express.static('public'));
  * HTML Endpoints
  */
 
-app.get('/', function homepage(req, res) {
-  res.sendFile(__dirname + '/views/index.html');
-});
+ app.get('/api/nbaTeams', function (req, res) {
+   // send all books as JSON response
+   db.Book.find()
+     // populate fills in the author id with all the author data
+     .populate('location')
+     .exec(function(err, nbaTeams){
+       if (err) { return console.log("index error: " + err); }
+       res.json(nbaTeams);
+     });
+ });
 
 
 /*
