@@ -19,7 +19,7 @@ app.use(function(req, res, next) {
  * DATABASE *
  ************/
 
-// var db = require('./models');
+var db = require('./models');
 
 /**********
  * ROUTES *
@@ -39,7 +39,7 @@ app.use(express.static('public'));
 
  app.get('/api/nbaTeams', function (req, res) {
    // send all books as JSON response
-   db.Book.find()
+   db.nbaTeams.find()
      // populate fills in the author id with all the author data
      .populate('location')
      .exec(function(err, nbaTeams){
