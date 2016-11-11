@@ -15,11 +15,18 @@ app.use(function(req, res, next) {
   next();
 });
 
-/************
- * DATABASE *
- ************/
+
 
 var db = require('./models');
+
+var profile = {
+    name: "Jon hall",
+    alive: false,
+    dog: "Kizzy",
+    location: "Richmond",
+    Mother: "Donetta",
+    github: "https://github.com/jhall0310"
+  };
 
 /**********
  * ROUTES *
@@ -32,22 +39,56 @@ app.use(express.static('public'));
 /*
  * HTML Endpoints
  */
+ app.get('/api/profile', function index(req, res) {
+   res.json({ profile});
+ });
+
 
  app.get('/', function homepage(req, res) {
    res.sendFile(__dirname + '/views/index.html');
  });
 
- app.get('/api/nbaTeams', function (req, res) {
+ app.get('/api/Dogs', function (req, res) {
    // send all books as JSON response
-   db.nbaTeams.find()
+   db.Dog.find()
      // populate fills in the author id with all the author data
      .populate('location')
-     .exec(function(err, nbaTeams){
+     .exec(function(err, Dog){
        if (err) { return console.log("index error: " + err); }
-       res.json(nbaTeams);
+       res.json(Dog);
      });
  });
 
+app.get('/api/Dogs/:id', function show(req, res) {
+  var foundDog = Dog.filter(function (todo) {
+   return Dog._id == DogId;
+ })[0];
+ res.json(Dog);
+});
+
+app.post('/api/Dogs', function (req, res) {
+  // create new book with form data (`req.body`)
+  var Dog = json();
+  var newDog = new db.Dog({
+    description: req.body.title,
+    color: req.body.hue,
+    size: req.body.size,
+    image: req.body.pic,
+    });
+    Dog.push(newDog);
+  res.json(newDog);
+  console.log("Dog Created", newDog);
+  });
+
+  app.delete('/api/Dogs/:id', function (req, res) {
+  // get book id from url params (`req.params`)
+  console.log(req.params)
+  var bookId = req.params.id;
+
+  db.Dog.findOneAndRemove({ _id: DogId }, function (err, deletedDog) {
+    res.json(deletedDog);
+  });
+});
 
 /*
  * JSON API Endpoints
@@ -57,13 +98,13 @@ app.get('/api', function api_index(req, res) {
   // TODO: Document all your api endpoints below
   res.json({
     woopsIForgotToDocumentAllMyEndpoints: true, // CHANGE ME ;)
-    message: "Welcome to my personal api! Here's what you need to know!",
-    documentationUrl: "https://github.com/example-username/express_self_api/README.md", // CHANGE ME
-    baseUrl: "http://YOUR-APP-NAME.herokuapp.com", // CHANGE ME
+    message: "Welcome to Jon Hall api! Here's what you need to know!",
+    documentationUrl: "https://github.com/jhall0310/express_self_api/README.md", // CHANGE ME
+    baseUrl: "http://guarded-garden-63624.herokuapp.com", // CHANGE ME
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "POST", path: "/api/campsites", description: "E.g. Create a new campsite"} // CHANGE ME
+      {method: "GET", path: "/api/profile", description: "Jon Hall just Jon Hall"}, // CHANGE ME
+      {method: "POST", path: "/api/Dogs", description: "Dogs by Color, size and image provied"} // CHANGE ME
     ]
   })
 });
