@@ -23,7 +23,7 @@ $(document).ready(function(){
     e.preventDefault();
     $.ajax({
       method: 'POST',
-      url: '/api/Dogs',
+      url: '/api/dogs',
       data: $(this).serialize(),
       success: newDogSuccess,
       error: newDogError
@@ -31,10 +31,10 @@ $(document).ready(function(){
   });
 // your code
 
-$booksList.on('click', '.deleteBtn', function() {
+$dogsList.on('click', '.deleteBtn', function() {
     $.ajax({
       method: 'DELETE',
-      url: '/api/Dogs/'+$(this).attr('data-id'),
+      url: '/api/dogs/'+$(this).attr('data-id'),
       success: deleteBookSuccess,
       error: deleteBookError
     });
@@ -81,7 +81,7 @@ console.log("there was an error");
 
 function deleteBookSuccess(json) {
   var dog = json;
-  var bookId = Dog._id;
+  var dogID = Dog._id;
 
   // find the book with the correct ID and remove it from our allBooks array
   for(var index = 0; index < allDogs.length; index++) {

@@ -48,7 +48,7 @@ app.use(express.static('public'));
    res.sendFile(__dirname + '/views/index.html');
  });
 
- app.get('/api/Dogs', function (req, res) {
+ app.get('/api/dogs', function (req, res) {
    // send all books as JSON response
    db.Dog.find()
      // populate fills in the author id with all the author data
@@ -59,36 +59,33 @@ app.use(express.static('public'));
      });
  });
 
-app.get('/api/Dogs/:id', function show(req, res) {
+app.get('/api/dogs/:id', function show(req, res) {
   var foundDog = Dog.filter(function (todo) {
    return Dog._id == DogId;
  })[0];
  res.json(Dog);
 });
 
-app.post('/api/Dogs', function (req, res) {
+app.post('/api/dogs', function (req, res) {
   // create new book with form data (`req.body`)
-  var Dog = json();
+  var Dog = db.Dog;
   var newDog = new db.Dog({
     description: req.body.title,
     color: req.body.hue,
     size: req.body.size,
     image: req.body.pic,
     });
-    Dog.push(newDog);
+    db.Dogs.push(newDog);
   res.json(newDog);
   console.log("Dog Created", newDog);
   });
 
-  app.delete('/api/Dogs/:id', function (req, res) {
-  // get book id from url params (`req.params`)
-  console.log(req.params)
-  var bookId = req.params.id;
-
-  db.Dog.findOneAndRemove({ _id: DogId }, function (err, deletedDog) {
-    res.json(deletedDog);
-  });
+  app.delete('/api/dogs/:id', function destroy(req, res) {
+    var DogToDelete = parseInt(req.params.id);
+    db.Dog.splice(db.Dog.indexOf(DogToDelete), 1);
+    res.json(DogToDelete);
 });
+
 
 /*
  * JSON API Endpoints
