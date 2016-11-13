@@ -60,10 +60,11 @@ app.use(express.static('public'));
  });
 
 app.get('/api/dogs/:id', function show(req, res) {
-  var foundDog = Dog.filter(function (todo) {
+  
+  var DogId = Dog.filter(function (todo) {
    return Dog._id == DogId;
  })[0];
- res.json(Dog);
+ res.json(DogId);
 });
 
 app.post('/api/dogs', function (req, res) {
