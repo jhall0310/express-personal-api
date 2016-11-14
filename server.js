@@ -28,6 +28,7 @@ var profile = {
     github: "https://github.com/jhall0310"
   };
 
+
 /**********
  * ROUTES *
  **********/
@@ -60,7 +61,7 @@ app.use(express.static('public'));
  });
 
 app.get('/api/dogs/:id', function show(req, res) {
-  
+
   var DogId = Dog.filter(function (todo) {
    return Dog._id == DogId;
  })[0];
@@ -69,14 +70,14 @@ app.get('/api/dogs/:id', function show(req, res) {
 
 app.post('/api/dogs', function (req, res) {
   // create new book with form data (`req.body`)
-  var Dog = db.Dog;
+  var newPup = db.Dog;
   var newDog = new db.Dog({
     description: req.body.title,
     color: req.body.hue,
     size: req.body.size,
     image: req.body.pic,
     });
-    db.Dogs.push(newDog);
+    Dog.push(newDog);
   res.json(newDog);
   console.log("Dog Created", newDog);
   });
@@ -95,8 +96,8 @@ app.post('/api/dogs', function (req, res) {
 app.get('/api', function api_index(req, res) {
   // TODO: Document all your api endpoints below
   res.json({
-    woopsIForgotToDocumentAllMyEndpoints: true, // CHANGE ME ;)
-    message: "Welcome to Jon Hall api! Here's what you need to know!",
+    woopsIForgotToDocumentAllMyEndpoints: false, // CHANGE ME ;)
+    message: "Welcome to Jon Hall's api! Here's what you need to know!",
     documentationUrl: "https://github.com/jhall0310/express_self_api/README.md", // CHANGE ME
     baseUrl: "http://guarded-garden-63624.herokuapp.com", // CHANGE ME
     endpoints: [
